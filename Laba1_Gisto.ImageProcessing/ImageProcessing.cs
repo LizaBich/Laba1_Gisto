@@ -137,6 +137,10 @@ namespace Laba1_Gisto.ImageProcessing
                     result.Add(coefs);
                 }
             }
+            
+            // core0 = new [] {1, 0, 0, -1};
+            // core1 = new [] {0, -1, 1, 0};
+            // поочерёдно свернуть изображение с этими последовательностями.
 
             return result;
         }
