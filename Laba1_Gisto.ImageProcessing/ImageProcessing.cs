@@ -101,14 +101,14 @@ namespace Laba1_Gisto.ImageProcessing
         {
             var newImage = new Bitmap(origin.Width, origin.Height, PixelFormat.Format24bppRgb);
 
-            var filteredPixels = this.PixelConvolution(this.GetPixels(origin), this.CreateMask(origin));
+            var filteredPixels = this.Calculateresponse(origin);
 
-            var maxI = origin.Width - 1;
-            for (var i = 0; i < origin.Width; ++i)
+            var maxI = origin.Height - 1;
+            for (var i = 0; i < origin.Height; ++i)
             {
-                for (var j = 0; j < origin.Height; ++j)
+                for (var j = 0; j < origin.Width; ++j)
                 {
-                    newImage.SetPixel(i, j, filteredPixels[maxI * j + i]);
+                    newImage.SetPixel(j, i, filteredPixels[maxI * j + i]);
                 }
             }
 
@@ -117,9 +117,9 @@ namespace Laba1_Gisto.ImageProcessing
 
         // pixel0, pixel1
         // pixel2, pixel3
-        private IList<double[]> CreateMask(Bitmap origin)
+        private IList<Color> Calculateresponse(Bitmap origin)
         {
-            var result = new List<double[]>();
+            var result = new List<Color>();
             for (var i = 0; i < origin.Width; ++i)
             {
                 for (var j = 0; j < origin.Height; ++j)
@@ -134,72 +134,11 @@ namespace Laba1_Gisto.ImageProcessing
                     var bG = Math.Pow(Math.Pow(pixel0.B - pixel3.B, 2) + Math.Pow(pixel1.B - pixel2.B, 2), 0.5);
 
                     var coefs = new [] { rG, gG, bG };
-                    result.Add(coefs);
+                    result.Add(Color.FromArgb((byte)rG, (byte)gG, (byte)bG));
                 }
             }
-            
-            // core0 = new [] {1, 0, 0, -1};
-            // core1 = new [] {0, -1, 1, 0};
-            // поочерёдно свернуть изображение с этими последовательностями.
 
             return result;
-        }
-
-        private IList<Color> PixelConvolution(IList<Color> origin, IList<double[]> mask)
-        {
-            IList<Color> filteredPixels = new List<Color>();
-
-            for (var h = 0; h < origin.Count; ++h)
-            {
-                var sumR = 0.0;
-                var sumG = 0.0;
-                var sumB = 0.0;
-                for (var m = 0; m < mask.Count; ++m)
-                {
-                    sumR += origin[h].R * mask[Math.Abs(m - h)][0];
-                    sumG += origin[h].G * mask[Math.Abs(m - h)][1];
-                    sumB += origin[h].B * mask[Math.Abs(m - h)][2];
-                }
-
-                filteredPixels.Add(Color.FromArgb((byte)sumR, (byte)sumG, (byte)sumB));
-            }
-
-
-            //Parallel.For(0, origin.Count, CalculateColumns);
-            //void CalculateColumns(int h)
-            //{
-            //    var sumR = 0.0;
-            //    var sumG = 0.0;
-            //    var sumB = 0.0;
-            //    for (var m = 0; m < mask.Count; ++m)
-            //    {
-            //        sumR += origin[h].R * mask[Math.Abs(m - h)][0];
-            //        sumG += origin[h].G * mask[Math.Abs(m - h)][1];
-            //        sumB += origin[h].B * mask[Math.Abs(m - h)][2];
-            //    }
-
-            //    filteredPixels.Add(Color.FromArgb((byte)sumR, (byte)sumG, (byte)sumB));
-
-
-            //}
-
-            return filteredPixels;
-        }
-
-        private IList<Color> GetPixels(Bitmap origin)
-        {
-            var pixels = new List<Color>();
-
-            for (var i = 0; i < origin.Width; ++i)
-            {
-                for (var j = 0; j < origin.Height; ++j)
-                {
-                    var pixel = origin.GetPixel(i, j);
-                    pixels.Add(pixel);
-                }
-            }
-
-            return pixels;
         }
     }
 }
