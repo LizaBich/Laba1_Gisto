@@ -102,13 +102,12 @@ namespace Laba1_Gisto.ImageProcessing
             var newImage = new Bitmap(origin.Width, origin.Height, PixelFormat.Format24bppRgb);
 
             var filteredPixels = this.Calculateresponse(origin);
-
-            var maxI = origin.Height - 1;
-            for (var i = 0; i < origin.Height; ++i)
+            
+            for (var i = 0; i < origin.Width; ++i)
             {
-                for (var j = 0; j < origin.Width; ++j)
+                for (var j = 0; j < origin.Height; ++j)
                 {
-                    newImage.SetPixel(j, i, filteredPixels[maxI * j + i]);
+                    newImage.SetPixel(i, j, filteredPixels[origin.Height * i + j]);
                 }
             }
 
@@ -133,7 +132,6 @@ namespace Laba1_Gisto.ImageProcessing
                     var gG = Math.Pow(Math.Pow(pixel0.G - pixel3.G, 2) + Math.Pow(pixel1.G - pixel2.G, 2), 0.5);
                     var bG = Math.Pow(Math.Pow(pixel0.B - pixel3.B, 2) + Math.Pow(pixel1.B - pixel2.B, 2), 0.5);
 
-                    var coefs = new [] { rG, gG, bG };
                     result.Add(Color.FromArgb((byte)rG, (byte)gG, (byte)bG));
                 }
             }
