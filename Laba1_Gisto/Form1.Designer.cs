@@ -222,7 +222,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1507, 725);
+            this.ClientSize = new System.Drawing.Size(1507, 891);
             this.Controls.Add(this.filteredHisto);
             this.Controls.Add(this.filteredImage);
             this.Controls.Add(this.constant);

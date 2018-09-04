@@ -124,9 +124,9 @@ namespace Laba1_Gisto.ImageProcessing
                 for (var j = 0; j < origin.Height; ++j)
                 {
                     var pixel0 = origin.GetPixel(i, j);
-                    var pixel1 = i == origin.Width - 1? Color.Black: origin.GetPixel(i + 1, j);
-                    var pixel2 = j == origin.Height - 1 ? Color.Black : origin.GetPixel(i, j + 1);
-                    var pixel3 = i == origin.Width - 1 || j == origin.Height - 1? Color.Black: origin.GetPixel(i + 1, j + 1);
+                    var pixel1 = i == origin.Width - 1? Color.White: origin.GetPixel(i + 1, j);
+                    var pixel2 = j == origin.Height - 1 ? Color.White : origin.GetPixel(i, j + 1);
+                    var pixel3 = i == origin.Width - 1 || j == origin.Height - 1? Color.White: origin.GetPixel(i + 1, j + 1);
 
                     var rG = Math.Pow(Math.Pow(pixel0.R - pixel3.R, 2) + Math.Pow(pixel1.R - pixel2.R, 2), 0.5);
                     var gG = Math.Pow(Math.Pow(pixel0.G - pixel3.G, 2) + Math.Pow(pixel1.G - pixel2.G, 2), 0.5);

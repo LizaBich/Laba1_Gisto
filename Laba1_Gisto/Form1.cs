@@ -32,8 +32,7 @@ namespace Laba1_Gisto
             using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "png files (*.png)|*.png";
-                openFileDialog.FilterIndex = 1;
-
+           
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     this._imagePath = openFileDialog.FileName;
